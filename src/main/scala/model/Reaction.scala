@@ -14,4 +14,37 @@ case class Reaction(
   val k: Int,
   val a: Int
 ) {
+
+  // Determine if the reaction can be apply on a given solution
+  private def canApplyOn(solution: Solution): Boolean =
+    this.react forall {
+      case (molecule, amount) =>
+        (solution contains molecule) && (solution(molecule) >= amount)
+    }
+
+  /** Apply the reaction on a solution.
+    *
+    * @param solution solution on which apply the reaction
+    * @return the given solution if the reaction can not be applied on it,
+    *         the application result of the reaction on the given solution
+    *         otherwise
+    */
+  def applyOn(solution: Solution): Solution =
+    if (this canApplyOn solution) {
+      val withoutReacts = this.react.foldLeft(solution) {
+        case (sol, (molecule, amount)) =>
+          sol.updated(molecule, sol(molecule) - amount)
+      }
+      val withProducts = this.prod.foldLeft(withoutReacts) {
+        case (sol, complex@(molecule, amount)) =>
+          if (sol contains molecule)
+            sol.updated(molecule, sol(molecule) + amount)
+          else
+            sol + complex
+      }
+
+      withProducts filterNot { case (_, amount) => amount <= 0 }
+    } else
+      solution
+
 }
