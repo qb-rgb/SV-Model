@@ -9,14 +9,18 @@ package model
   * @param a probability that the reaction occur
   */
 case class Reaction(
-  val react: Solution,
-  val prod: Solution,
-  val k: Int,
-  val a: Int
+  react: Solution,
+  prod: Solution,
+  k: Int,
+  a: Int
 ) {
 
-  // Determine if the reaction can be apply on a given solution
-  private def canApplyOn(solution: Solution): Boolean =
+  /** Determine if the reaction can be apply on a given solution.
+    *
+    * @param solution solution on which apply the reaction
+    * @return true is the reaction can be apply on the solution, false otherwise
+    */
+  def canApplyOn(solution: Solution): Boolean =
     this.react forall {
       case (molecule, amount) =>
         (solution contains molecule) && (solution(molecule) >= amount)
