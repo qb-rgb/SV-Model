@@ -51,4 +51,11 @@ case class Reaction(
     } else
       solution
 
+  // Format a solution as a string
+  private def solToString(solution: Solution): String =
+    (solution map { case (molecule, amount) => amount + molecule }) mkString " + "
+
+  override def toString: String =
+    this.solToString(this.react) + " -> " + this.solToString(this.prod)
+
 }
