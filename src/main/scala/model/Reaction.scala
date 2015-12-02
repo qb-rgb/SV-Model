@@ -10,7 +10,7 @@ package model
 case class Reaction(
   react: Solution,
   prod: Solution,
-  k: Int
+  k: Double
 ) {
 
   /** Determine if the reaction can be apply on a given solution.
