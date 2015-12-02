@@ -22,18 +22,19 @@ class Simulator(
   private val orderedInit = this.initialSolution.keys.toList.sorted
 
   // Get the h coefficient for a reaction in a particular solution
-  private def getHFor(reaction: Reaction, solution: Solution): Int = {
+  private def getHFor(reaction: Reaction, solution: Solution): BigInt = {
     // Factorial
-    def fact(n: Int): Int = if (n <= 0) 1 else n * fact(n - 1)
+    def fact(n: BigInt): BigInt = if (n <= 0) 1 else n * fact(n - 1)
 
     // Under
-    def under(n: Int, k: Int): Int = (n to n - k + 1 by -1).foldLeft(1){ _ * _ }
+    def under(n: BigInt, k: BigInt): BigInt = (n to n - k + 1 by -1).foldLeft(BigInt(1)){ _ * _ }
 
     // Binomial coefficient (k among n)
-    def binomialCoeff(n: Int, k: Int): Int = under(n, k) / fact(k)
+    def binomialCoeff(n: BigInt, k: BigInt): BigInt = under(n, k) / fact(k)
 
-    reaction.react.keys.foldLeft(1){
-      case (acc, mol) => acc * binomialCoeff(solution.getOrElse(mol, 0), reaction.react(mol))
+    reaction.react.keys.foldLeft(BigInt(1)){
+      case (acc, mol) =>
+        acc * binomialCoeff(BigInt(solution.getOrElse(mol, 0)), BigInt(reaction.react(mol)))
     }
   }
 
@@ -81,10 +82,11 @@ class Simulator(
         val hiTimesAi = (
           for {
             reac <- this.reactions
-          } yield (reac, this.getHFor(reac, currentSolution) * reac.k)
+          } yield (reac, this.getHFor(reac, currentSolution).toDouble * reac.k)
         ).toMap
         val sumHiAi = hiTimesAi.values.sum
-        val tau = (1 / sumHiAi.toDouble) * math.log(1.0 / Random.nextDouble)
+        println(sumHiAi)
+        val tau = (1 / sumHiAi) * math.log(1 / Random.nextDouble)
 
         def selectReac(reactions: List[(Reaction, Double)], currentNb: Double): Reaction =
           if (reactions.length == 1)
