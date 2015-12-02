@@ -12,7 +12,7 @@ case class Reaction(
   react: Solution,
   prod: Solution,
   k: Int,
-  a: Int
+  a: Double
 ) {
 
   /** Determine if the reaction can be apply on a given solution.
