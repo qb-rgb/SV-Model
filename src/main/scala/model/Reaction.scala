@@ -6,13 +6,11 @@ package model
   * @param react reactants solution
   * @param prod products solution
   * @param k velocity of the reaction
-  * @param a probability that the reaction occur
   */
 case class Reaction(
   react: Solution,
   prod: Solution,
-  k: Int,
-  a: Double
+  k: Int
 ) {
 
   /** Determine if the reaction can be apply on a given solution.
