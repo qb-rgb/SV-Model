@@ -12,7 +12,7 @@ import model.{Solution, Reaction}
 class Simulator(
   initialSolution: Solution,
   reactions: Set[Reaction],
-  maxTime: Int
+  maxTime: Double
 ) {
 
   import scala.util.Random
