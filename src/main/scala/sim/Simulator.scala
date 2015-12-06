@@ -85,7 +85,6 @@ class Simulator(
           } yield (reac, this.getHFor(reac, currentSolution).toDouble * reac.k)
         ).toMap
         val sumHiAi = hiTimesAi.values.sum
-        println(sumHiAi)
         val tau = (1 / sumHiAi) * math.log(1 / Random.nextDouble)
 
         def selectReac(reactions: List[(Reaction, Double)], currentNb: Double): Reaction =
