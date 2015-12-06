@@ -106,7 +106,10 @@ class Simulator(
       }
     }
 
+    val start = System.currentTimeMillis()
     innerSimule(this.initialSolution, 0)
+    val end = System.currentTimeMillis()
+    println(end - start + " ms")
     bw.close
     this.writePlotFile
   }
