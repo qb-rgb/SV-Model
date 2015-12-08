@@ -3,6 +3,10 @@ Master MOCAD
 
 # SV - Copasi
 
+## Rapport
+
+Le fichier `seance2.pdf` correspond au rapport du projet et contient les réponses aux questions 1 à 11.
+
 ## Architecture
 
 ```
